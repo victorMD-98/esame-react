@@ -1,0 +1,14 @@
+.film{
+    width: 15em;
+    height: 10em;
+    cursor: pointer;
+}
+.dFilm{
+    width: 16em;
+    height: 11em;
+    text-align: center;
+}
+.film:hover{
+    width: 16em;
+    height: 11em;
+}
