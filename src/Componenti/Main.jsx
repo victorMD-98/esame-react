@@ -7,7 +7,7 @@ export default class Main extends Component {
 
 state = {
     film : [],
-    inpR : "&s=harry%20potter"
+    inpR : "harry%20potter"
 }
 
 change = (e) => {
@@ -48,7 +48,6 @@ render(){
                             placeholder="inserisci genere"
                             aria-label="Recipient's username"
                             aria-describedby="basic-addon2"
-                            value=""
                             onChange={this.change}
                         />
                         <Button onClick={this.bottone}  
