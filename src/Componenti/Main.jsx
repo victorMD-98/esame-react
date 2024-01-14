@@ -1,14 +1,15 @@
 import { Component } from "react";
 import { LinkApi, Ricerca, Ricerca2 } from "../Dati/Dati";
 import "../fileCss/Main.css"
-import {Container, Row, Col, Dropdown, DropdownButton,ButtonGroup, InputGroup, Form, Button } from "react-bootstrap";
+import {Container, Row, Col, Dropdown, DropdownButton,ButtonGroup, InputGroup, Form, Button, Spinner } from "react-bootstrap";
 import { WatchAgain } from "./WatchAgain";
 
 export default class Main extends Component {
 
 state = {
     film : [],
-    inpR : "harry%20potter"
+    inpR : "harry%20potter",
+    stato: false
 }
 
 change = (e) => {
@@ -16,11 +17,23 @@ change = (e) => {
 }
 
 bottone = () => {
-    fetch(LinkApi+this.state.inpR).then(response=>response.json()).then(json=>this.setState({film:json.Search}));
+    fetch(LinkApi+this.state.inpR).then(response=>response.json()).then(json=>this.setState({film:json.Search}).catch(err=> console.log(err)));
 }
 
 componentDidMount(){
-        return (fetch(LinkApi+this.state.inpR).then(response=>response.json()).then(json=>this.setState({film:json.Search})))
+    this.setState({
+        stato : true
+    })
+        return (setTimeout(() => {
+            fetch(LinkApi+this.state.inpR).then(response=> response.json(), 
+            this.setState({
+                stato : false
+            })
+            ).then(json=>this.setState({film:json.Search})).catch(err=> console.log(err),
+            this.setState({
+                stato : false
+            }))
+        }, 3000))
 }
 
 render(){
@@ -60,6 +73,13 @@ render(){
                     </Col>
                 </Row>
             </Container>
+            {
+                this.state.stato && (
+                    <div>
+                        <Spinner animation="grow" variant="danger" />
+                    </div>
+                )
+            }
             <Container>
                 <h3 className="text-white">Film</h3>
                 <div className="d-flex flex-wrap ">
