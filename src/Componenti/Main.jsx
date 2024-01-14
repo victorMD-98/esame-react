@@ -2,6 +2,7 @@ import { Component } from "react";
 import { LinkApi, Ricerca, Ricerca2 } from "../Dati/Dati";
 import "../fileCss/Main.css"
 import {Container, Row, Col, Dropdown, DropdownButton,ButtonGroup, InputGroup, Form, Button } from "react-bootstrap";
+import { WatchAgain } from "./WatchAgain";
 
 export default class Main extends Component {
 
@@ -11,11 +12,11 @@ state = {
 }
 
 change = (e) => {
-    this.setState({inpR : e.target.value})
+    this.setState({inpR : e.target.value});
 }
 
 bottone = () => {
-    fetch(LinkApi+this.state.inpR).then(response=>response.json()).then(json=>this.setState({film:json.Search}))
+    fetch(LinkApi+this.state.inpR).then(response=>response.json()).then(json=>this.setState({film:json.Search}));
 }
 
 componentDidMount(){
@@ -23,7 +24,7 @@ componentDidMount(){
 }
 
 render(){
-    console.log(this.state.inpR)
+    //console.log(this.state.inpR)
     return (
         <>
             <Container className="bg-dark text-white" >
@@ -49,8 +50,9 @@ render(){
                             aria-label="Recipient's username"
                             aria-describedby="basic-addon2"
                             onChange={this.change}
+                            
                         />
-                        <Button onClick={this.bottone}  
+                        <Button onClick={this.bottone}   
                          variant="outline-secondary" id="button-addon2">
                         Button
                         </Button>
@@ -63,9 +65,10 @@ render(){
                 <div className="d-flex flex-wrap ">
                     {this.state.film.map((e, i)=>
                         (<div className="dFilm m-0" key={i}><img className="film" src={e.Poster} alt="immagine" /></div>)
-                    )} 
+                    )};
                 </div>
             </Container>
+            <WatchAgain props={this.state.film} />
         </>
     )
 }
